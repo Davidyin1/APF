@@ -5,26 +5,26 @@
 #include <cmath>
 #include <opencv2/opencv.hpp>
 #include <ctime>
-#include <windows.h>
+
 using namespace std;
 using namespace cv;
-void random_obs(double(*obs)[2], int n);//¸¨Öúº¯ÊýÉùÃ÷
+void random_obs(double(*obs)[2], int n);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 double compute_attfield(double* Current_point, double* goal_point, double Attraction_K, double d);
 double compute_repfield(double* Current_point, int n, double* goal_point, double Repulsion_K, double Obstacles_dis);
 class APF
 {
 private:
-    double Attraction_K;//ÒýÁ¦³ß¶ÈÒò×Ó
-    double Repulsion_K;//³âÁ¦³ß¶ÈÒò×Ó
-    double Obstacles_dis;//ÕÏ°­×÷ÓÃ·§Óò
-    double a;//ÐÞÕý³âÁ¦º¯ÊýÏµÊý
-    double d;//ÒýÁ¦ÐÞÕý·§Óò
-    double step;//²½³¤
-    double* start_point;//ÆðÊ¼µã
-    double* goal_point;//Ä¿±êµã
-    double(*obstacles)[2];//ÕÏ°­ÎïÊý×é
+    double Attraction_K;//ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    double Repulsion_K;//ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    double Obstacles_dis;//ï¿½Ï°ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½
+    double a;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+    double d;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    double step;//ï¿½ï¿½ï¿½ï¿½
+    double* start_point;//ï¿½ï¿½Ê¼ï¿½ï¿½
+    double* goal_point;//Ä¿ï¿½ï¿½ï¿½
+    double(*obstacles)[2];//ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 public:
-    APF(double Attraction_K, double Repulsion_K, double Obstacles_dis, double a, double d, double step, double* start_point, double* goal_point, double(*obstacles)[2]) //½«¸÷¸ö²ÎÊý
+    APF(double Attraction_K, double Repulsion_K, double Obstacles_dis, double a, double d, double step, double* start_point, double* goal_point, double(*obstacles)[2]) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         this->Attraction_K = Attraction_K;
         this->Repulsion_K = Repulsion_K;
@@ -35,7 +35,7 @@ public:
         this->start_point = start_point;
         this->goal_point = goal_point;
         this->obstacles = obstacles;
-    }//¹¹Ôìº¯Êý
+    }//ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
     double* compute_angle(double* Current_point, int n);
     double* compute_attraction(double* Current_point, double* angle, double d);
     double* compute_repulsion(double* Current_point, double* angle, int n);
@@ -45,14 +45,14 @@ public:
     double output_goal_pointy();
 };
 /*************************************************
-º¯ÊýÃû³Æ£ºAPF::compute_angle
-ÀàÐÍ£º¼ÆËãº¯Êý
-×÷ÓÃ£º¼ÆËãµ±Ç°µãÓëÄ¿±êµãÒÔ¼°¸÷¸öÕÏ°­ÎïÖ®¼äµÄ¼Ð½Ç
-²ÎÊý£ºCurrent_point(µ±Ç°µã)£¬n(ÕÏ°­Îï¸öÊý)
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½APF::compute_angle
+ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½
+ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ãµ±Ç°ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Ä¼Ð½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Current_point(ï¿½ï¿½Ç°ï¿½ï¿½)ï¿½ï¿½n(ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 *************************************************/
 double* APF::compute_angle(double* Current_point, int n)
 {
-    double* Y = new double[++n];//YÓÃÓÚ´æ´¢¼Ð½Ç
+    double* Y = new double[++n];//Yï¿½ï¿½ï¿½Ú´æ´¢ï¿½Ð½ï¿½
     double deltax, deltay, r;
     for (int i = 0; i < n; i++)
     {
@@ -71,14 +71,14 @@ double* APF::compute_angle(double* Current_point, int n)
             Y[i] = acos(deltax / r);
         else
             Y[i] = -acos(deltax / r);
-    }//Çó¼Ð½ÇµÄ¹ý³Ì
+    }//ï¿½ï¿½Ð½ÇµÄ¹ï¿½ï¿½ï¿½
     return Y;
 };
 /*************************************************
-º¯ÊýÃû³Æ£ºAPF::compute_attraction
-ÀàÐÍ£º¼ÆËãº¯Êý
-×÷ÓÃ£º¼ÆËãµ±Ç°µãÊÜµ½µÄÒýÁ¦
-²ÎÊý£ºCurrent_point(µ±Ç°µã)£¬angle(¼Ð½ÇÊý×é)£¬d(ÒýÁ¦ÐÞÕý·§Óò)
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½APF::compute_attraction
+ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½
+ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ãµ±Ç°ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Current_point(ï¿½ï¿½Ç°ï¿½ï¿½)ï¿½ï¿½angle(ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½d(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 *************************************************/
 double* APF::compute_attraction(double* Current_point, double* angle, double d)
 {
@@ -94,18 +94,18 @@ double* APF::compute_attraction(double* Current_point, double* angle, double d)
     {
         Yatt[0] = this->Attraction_K * d * cos(angle[0]);
         Yatt[1] = this->Attraction_K * d * sin(angle[0]);
-    }//ÒýÁ¦ÐÞÕý
+    }//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     return Yatt;
 }
 /*************************************************
-º¯ÊýÃû³Æ£ºAPF::compute_repulsion
-ÀàÐÍ£º¼ÆËãº¯Êý
-×÷ÓÃ£º¼ÆËãµ±Ç°µãÊÜµ½µÄ³âÁ¦
-²ÎÊý£ºCurrent_point(µ±Ç°µã)£¬angle(¼Ð½ÇÊý×é)£¬n(ÕÏ°­Îï¸öÊý)
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½APF::compute_repulsion
+ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ãº¯ï¿½ï¿½
+ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ãµ±Ç°ï¿½ï¿½ï¿½Üµï¿½ï¿½Ä³ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Current_point(ï¿½ï¿½Ç°ï¿½ï¿½)ï¿½ï¿½angle(ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½n(ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 *************************************************/
 double* APF::compute_repulsion(double* Current_point, double* angle, int n)
 {
-    double* YY = new double[4];//´æ´¢×îÖÕ³âÁ¦
+    double* YY = new double[4];//ï¿½æ´¢ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½
     double Rat = pow((Current_point[0] - this->goal_point[0]), 2) + pow((Current_point[1] - this->goal_point[1]), 2);
     double rat = sqrt(Rat);
     double Rre, rre, Yrer, Yata;
@@ -123,8 +123,8 @@ double* APF::compute_repulsion(double* Current_point, double* angle, int n)
         }
         else
         {
-            Yrer = this->Repulsion_K * (1 / rre - 1 / this->Obstacles_dis) * (1 / Rre) * pow(rat, a);//ÇóµÄFre1(³âÁ¦)ÏòÁ¿
-            Yata = a * this->Repulsion_K * pow((1 / rre - 1 / this->Obstacles_dis), 2) * pow(rat, a - 1) / 2;//ÇóµÄFre2(ÒýÁ¦)ÏòÁ¿
+            Yrer = this->Repulsion_K * (1 / rre - 1 / this->Obstacles_dis) * (1 / Rre) * pow(rat, a);//ï¿½ï¿½ï¿½Fre1(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½
+            Yata = a * this->Repulsion_K * pow((1 / rre - 1 / this->Obstacles_dis), 2) * pow(rat, a - 1) / 2;//ï¿½ï¿½ï¿½Fre2(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½
             Yrerx[i] = Yrer * cos(angle[i + 1] + 3.1415);
             Yrery[i] = Yrer * sin(angle[i + 1] + 3.1415);
             Yatax[i] = Yata * cos(angle[0]);
@@ -138,10 +138,10 @@ double* APF::compute_repulsion(double* Current_point, double* angle, int n)
     return YY;
 }
 /*************************************************
-º¯ÊýÃû³Æ£ºAPF::sum
-ÀàÐÍ£º¸¨Öúº¯Êý
-×÷ÓÃ£º¶ÔdoubleÊý×é³ÉÔ±ÇóºÍ
-²ÎÊý£ºp1(Êý×éÃû)£¬n(Êý×é³ÉÔ±¸öÊý)
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½APF::sum
+ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½doubleï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½p1(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½n(ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½)
 *************************************************/
 double APF::sum(double* p1, int n)
 {
@@ -153,27 +153,27 @@ double APF::sum(double* p1, int n)
     return sum;
 }
 /*************************************************
-º¯ÊýÃû³Æ£ºAPF::output_step
-ÀàÐÍ£º¸¨Öúº¯Êý
-×÷ÓÃ£ºÊä³öË½ÓÐÊý¾Ý³ÉÔ±step
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½APF::output_step
+ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½Ô±step
 *************************************************/
 double APF::output_step()
 {
     return step;
 }
 /*************************************************
-º¯ÊýÃû³Æ£ºAPF::goal_pointx
-ÀàÐÍ£º¸¨Öúº¯Êý
-×÷ÓÃ£ºÊä³öË½ÓÐÊý¾Ý³ÉÔ±goal_point[0]
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½APF::goal_pointx
+ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½Ô±goal_point[0]
 *************************************************/
 double APF::output_goal_pointx()
 {
     return goal_point[0];
 }
 /*************************************************
-º¯ÊýÃû³Æ£ºAPF::output_pointy
-ÀàÐÍ£º¸¨Öúº¯Êý
-×÷ÓÃ£ºÊä³öË½ÓÐÊý¾Ý³ÉÔ±goal_point[1]
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½APF::output_pointy
+ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½Ô±goal_point[1]
 *************************************************/
 double APF::output_goal_pointy()
 {
